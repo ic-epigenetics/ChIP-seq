@@ -49,18 +49,17 @@ GSE56098_mESC_Otx2_2
 GSE56098_mESC_Input_1
 GSE56098_mESC_Input_2" > allfiles
 
-#Run Bowtie2 on your list of FastQ files, outputting SAM files as default.
-
-cd /data2/seq/bowtie2-2.1.0/ 
+#Designate the location of your Bowtie2 index. Run Bowtie2 on your list of FastQ files, outputting SAM files as default.
+export BOWTIE2_INDEXES=/data/seqtools/genomes/mm9/bowtie2/
 while read LINE
 do
-/data2/seq/bowtie2-2.1.0/bowtie2 mm9 -U /data/emmabell42/ChIP-seq/GSE56098/mESC/Otx2/$LINE.fastq > /data/emmabell42/ChIP-seq/GSE56098/mESC/Otx2$LINE.sam
-done < /data/emmabell42/ChIP-seq/GSE56098/allfiles
+/data/seqtools/bowtie2-2.2.3/bowtie2 -x mm9 -U /data/emmabell42/ChIP-seq/GSE56098/mESC/Otx2/$LINE.fastq > /data/emmabell42/ChIP-seq/GSE56098/mESC/Otx2$LINE.sam
+done < /data/emmabell42/ChIP-seq/GSE56098/mESC/Otx2/allfiles
 
 #Run MACS on your treatment (-t) and control (-c) SAM files. If MACS calculates d<60 run without model.
 
-cd /data/emmabell42/ChIP-seq/GSE56098/
-macs14 -t /data/emmabell42/ChIP-seq/GSE56098/GSE39502_GSE560981.sam -c /data/emmabell42/ChIP-seq/GSE56098/GSE39502_IgG1.sam -n GSE39502_GSE56098_rep1_2014_05_23 -g mm -B -S -m 10,30; 
+cd /data/emmabell42/ChIP-seq/GSE56098/mESC/Otx2/
+macs14 -t /data/emmabell42/ChIP-seq/GSE56098/mESC/Otx2/GSE56098_mESC_Otx2_1.sam /data/emmabell42/ChIP-seq/GSE56098/mESC/Otx2/GSE56098_mESC_Otx2_2.sam -c /data/emmabell42/ChIP-seq/GSE56098/mESC/Otx2/GSE56098_mESC_Input_1.sam /data/emmabell42/ChIP-seq/GSE56098/mESC/Otx2/GSE56098_mESC_Input_2.sam -n GSE56098_2014_12_17 -g mm -B -S -m 10,30; 
 
 cd /data/emmabell42/ChIP-seq/GSE56098/
-macs14 -t /data/emmabell42/ChIP-seq/GSE56098/GSE39502_GSE560982.sam -c /data/emmabell42/ChIP-seq/GSE56098/GSE39502_IgG2.sam -n GSE39502_GSE56098_rep1_2014_05_23 -g mm -B -S --nomodel --shiftsize 100; 
+macs14 -t /data/emmabell42/ChIP-seq/GSE56098/mESC/Otx2/GSE56098_mESC_Otx2_1.sam /data/emmabell42/ChIP-seq/GSE56098/mESC/Otx2/GSE56098_mESC_Otx2_2.sam -c /data/emmabell42/ChIP-seq/GSE56098/mESC/Otx2/GSE56098_mESC_Input_1.sam /data/emmabell42/ChIP-seq/GSE56098/mESC/Otx2/GSE56098_mESC_Input_2.sam -n GSE56098_2014_12_17 -n GSE39502_GSE56098_rep1_2014_05_23 -g mm -B -S --nomodel --shiftsize 100; 
