@@ -1,0 +1,12 @@
+setwd("/data2/seq/testrun")
+
+ofile <- as.character(read.table("file_to_filter.txt")[[1]])
+library(ShortRead)
+
+reads <- readFastq(ofile)
+quals <- as(FastqQuality(quality(quality(reads))),"matrix")
+ok_q <- which(apply(quals,MARGIN=1,sum)>400)
+no_n <- which(alphabetFrequency(sread(reads))[,'N']==0)
+newfile <- strsplit(ofile,split=".fastq")[[1]][1]
+newfile <- paste(newfile,"_filtered.fq",sep="")
+writeFastq(reads[intersect(ok_q,no_n)],newfile)
