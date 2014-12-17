@@ -1,0 +1,12 @@
+#Download and install prebuilt Bowtie indexes
+
+#Locate the relevant Bowtie index on the Bowtie1 or Bowtie2 website (http://bowtie-bio.sourceforge.net/bowtie2/index.shtml). 
+#WARNING: Bowtie1 and Bowtie2 indexes are incompatible.
+#Navigate to the appropriate location and download the zipped index.
+
+cd /data/seqtools/genomes/mm9/Bowtie2/
+#!/bin/bash
+wget ftp://ftp.ccb.jhu.edu/pub/data/bowtie2_indexes/mm9.zip
+
+#Unzip the index
+unzip mm9.zip
