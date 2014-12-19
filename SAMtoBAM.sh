@@ -1,12 +1,7 @@
-echo "GSE11431_Esrrb
-GSE11431_Klf4
-GSE11431_Oct4
-GSE37262_Ncoa3
-GSE11431_GFP
-GSE11431_Nanog
-GSE11431_Sox2" > samfiles
-
 #!/bin/bash
+ls -a -1 *.sam > samfiles
+sed -i 's/.sam//g' samfiles
+
 while read LINE
 do
 /data/seqtools/samtools-1.1/samtools view -bS -o $LINE.bam $LINE.sam
