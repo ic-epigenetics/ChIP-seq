@@ -12,13 +12,15 @@ if(length(reads)>20000000){
         trim <- c(trim,trim2)
 }
 bad.q <- which(!is.infinite(trim) & trim<(0.8*ideal.readlength))
+#5607704 of 20944820 reads
 good.reads <- setdiff(c(1:length(reads)),bad.q)
+#15337116 good reads
 reads <- reads[good.reads]
 trim <- trim[good.reads]
 trim[is.infinite(trim)] <- ideal.readlength
-reads <- ShortReadQ(sread=subseq(sread(reads),start=rep(1,length(trim)),end=trim),quality=new(Class=class(quality(reads)),quality=subseq(quality(quality(read
-s)),start=rep(1,length(trim)),end=trim)),id=id(reads))
-no_n <- which(alphabetFrequency(sread(reads[1:100]))[,'N']==0)
+reads <- ShortReadQ(sread=subseq(sread(reads),start=rep(1,length(trim)),end=trim),quality=new(Class=class(quality(reads)),quality=subseq(quality(quality(reads)),start=rep(1,length(trim)),end=trim)),id=id(reads))
+#no_n <- which(alphabetFrequency(sread(reads[1:100]))[,'N']==0)
 newfile <- strsplit(ofile,split=".fastq")[[1]][1]
 newfile <- paste(newfile,"_filtered.fq",sep="")
-writeFastq(reads[no_n],newfile)
+#writeFastq(reads[no_n],newfile)
+writeFastq(reads,newfile,compress=F)
